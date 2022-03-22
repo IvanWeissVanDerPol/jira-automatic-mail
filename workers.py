@@ -31,15 +31,7 @@ class worker_class:
         self.mail = ""
         self.number_of_tickets = 0
         self.ticket_list = []
-        
-    def add_ticket(self,issue_key,summary,status,prio,ticket_num,real_prio):
-        new_ticket = ticket(issue_key,summary,status,prio)
-        heapq.heappush(self.ticket_list, (real_prio,ticket_num,new_ticket) )
-        self.number_of_tickets += 1
     
-    def pop_ticket(self):
-        poped_ticket = heapq.heappop(self.ticket_list)
-        return poped_ticket
     def append_ticket(self,issue_key,summary,status,prio,due_date,ticket_num,real_prio):
         pyDate = present = ""
         if due_date != " ":
@@ -50,6 +42,7 @@ class worker_class:
             new_ticket = ticket(issue_key,summary,status,prio,due_date)
             self.ticket_list.append(new_ticket)
             self.number_of_tickets += 1
+            
     def sort(self):
         sorted_list = sorted(self.ticket_list, key=lambda x: (x.prio, x.issue_key))
         print(sorted_list)
