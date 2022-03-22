@@ -116,7 +116,6 @@ for worker in workers:
     mail_content = mail_content + line
     for ticket_obj in worker_tickets:
         #!uncomment this
-        # ticket = ticket_obj[2]
         ticket = ticket_obj
         statusLen = len(ticket.status)
         keyLen = len(ticket.issue_key)
