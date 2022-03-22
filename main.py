@@ -25,8 +25,8 @@ def log_in(browser,email,password):
     time.sleep(sleeptime)
 
 ###### Email ######
-sender_address = 'weissvanderpol@gmail.com'
-sender_pass = 'Polivan123Gmail!'
+sender_address = 'processmail@gmail.com'
+sender_pass = 'processPass'
 subject = 'automated email here are all your open tickets'
 mail_content = ""
 
@@ -42,12 +42,12 @@ next_page_xpath =       "/html/body/div[1]/section/div[1]/div[3]/div/div/div/div
 sleeptime = 3
 workers = []
 workers_found = []
-workers_that_are_gone = ['Gaston Hendriks','Francisco Bogado','Arturo Fleitas','Marcelino Jara De Leon']
+workers_that_are_gone = ['jira accounts user name and surname complete']
 
 
 browser = webdriver.Chrome("driver\\chromedriver.exe")  
 browser.maximize_window()  
-log_in(browser,"ivan","ivan")
+log_in(browser,"jiraLogInUser","jiraLogInPass")
 
 browser.get(ticket_page)
 # while not in last page (breaks when next page is not found)
@@ -58,6 +58,7 @@ while True:
     rows = ticket_table.find_elements(By.XPATH,'./tr')
     for row in rows:
         ticket_num = ticket_num + 1 
+        # put jira columns in this order 
         issue_key = row.find_element(By.XPATH,"./td[1]").text
         summary   = row.find_element(By.XPATH,"./td[2]").accessible_name
         user_name = row.find_element(By.XPATH,"./td[3]").accessible_name
@@ -126,49 +127,10 @@ for worker in workers:
         line = ticket.prio + "                " + ticket.status + statusTabs +  ticket.due_date + dateTabs + "http://192.168.1.3:8080/browse/" + ticket.issue_key + keyTabs + ticket.summary + "\n"
         worker_file.write(line)
         mail_content = mail_content + line
-        
-        
-    #! delete this
-    # worker.mail = "weissvanderpol@gmail.com"
-    # receiver_address = worker.mail
-    # message = MIMEMultipart()
-    # subject = "Open tickets - " + worker_name
-    # message['Subject'] = subject
-    # message['From'] = sender_address
-    # message['To'] = worker.mail
-
-    # message.attach(MIMEText(mail_content, 'plain'))
-    # #Create SMTP session for sending the mail
-    # session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
-    # session.starttls() #enable security
-    # session.login(sender_address, sender_pass) #login with mail_id and password
-    # text = message.as_string()
-    # session.sendmail(sender_address, receiver_address, text)
-    # session.quit()
-    # print('Mail Sent')
-    
+     
     if worker.name == "Unassigned":
-        worker.mail = "jacquelin.fleytas@wpg.com.py"
+        worker.mail = "admin mail"
 
-    if worker.mail == "emilio.ginzobenitez@wpg.com.py":
-
-        receiver_address = worker.mail
-        message = MIMEMultipart()
-        message['From'] = sender_address
-        message['To'] = worker.mail
-
-        message.attach(MIMEText(mail_content, 'plain'))
-        #Create SMTP session for sending the mail
-        session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
-        session.starttls() #enable security
-        session.login(sender_address, sender_pass) #login with mail_id and password
-        text = message.as_string()
-        session.sendmail(sender_address, receiver_address, text)
-        session.quit()
-        print('Mail Sent')
-
-    if worker.mail == "jacquelin.fleytas@wpg.com.py":
-        
         receiver_address = worker.mail
         message = MIMEMultipart()
         message['From'] = sender_address
